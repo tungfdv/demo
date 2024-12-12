@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py  &&
+             gunicorn wastemgmtbe.asgi:application -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 --workers 2"
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
