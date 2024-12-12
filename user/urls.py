@@ -1,13 +1,9 @@
 from django.urls import path
-from user.views import *  # noqa: F403
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('register/', UserRegisterView.as_view(), name='register'),
-    path('login/', UserLoginView.as_view(), name='login'),
-    path("logout/", LogoutView.as_view(), name="logout"),
-    path('<int:user_id>/', UserGetView.as_view(), name='user_get'),
-    path('<int:user_id>/update/', UserUpdateView.as_view(), name='user_update'),
-    path('<int:user_id>/delete/', UserDeleteView.as_view(), name='user_delete'),
-    path('<int:user_id>/reset-password/', UserResetPasswordView.as_view(), name='user_reset_password'),
+    path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('login/', auth_views.LoginView.as_view(), name='login'), 
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'), 
 ]
